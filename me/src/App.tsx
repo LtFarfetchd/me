@@ -1,4 +1,5 @@
 import React from "react";
+import { Button } from "semantic-ui-react";
 
 function App() {
   return (
@@ -7,6 +8,7 @@ function App() {
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
+        <Button>This is a sem ui button</Button>
         <a
           className="App-link"
           href="https://reactjs.org"

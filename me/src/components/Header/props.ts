@@ -1,1 +1,1 @@
-interface HeaderProps {}
+export interface HeaderProps {}

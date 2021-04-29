@@ -1,1 +1,1 @@
-interface FolioProps {}
+export interface FolioProps {}

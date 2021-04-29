@@ -1,1 +1,1 @@
-interface EmploymentHistoryProps {}
+export interface EmploymentHistoryProps {}

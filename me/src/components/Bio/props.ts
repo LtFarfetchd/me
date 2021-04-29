@@ -1,1 +1,1 @@
-interface BioProps {}
+export interface BioProps {}

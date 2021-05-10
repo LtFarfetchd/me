@@ -2,4 +2,7 @@
          Site Overrides
 *******************************/
 
-
+.ui.button {
+  border-radius: 100rem;
+  margin: 0px;
+}

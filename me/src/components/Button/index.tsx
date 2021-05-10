@@ -11,6 +11,7 @@ const GradientButtonBorder = styled.div`
   display: inline-block;
   padding: ${(props: GradientButtonBorderProps) => props.borderSize};
   border-radius: 100rem;
+  cursor: pointer;
 `;
 
 const CustomSemanticButton = styled(Button)`

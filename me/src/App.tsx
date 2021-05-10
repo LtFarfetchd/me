@@ -1,19 +1,14 @@
 import React from "react";
-import { Button } from "semantic-ui-react";
+import { colors } from "./Helpers/palette";
 import { GradientButton } from "./components/Button";
-import styled from "styled-components";
-
-const StyledSemanticButton = styled(Button).attrs({ color: "blue" })`
-  width: 40rem;
-`;
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
         <GradientButton
-          colorOne="blue"
-          colorTwo="orange"
+          colorOne={colors.primaryColor}
+          colorTwo={colors.secondaryColor}
           borderSize="0.175rem"
           onClick={() => console.log("yup")}
         >

@@ -1,6 +1,6 @@
-import { Button } from "semantic-ui-react";
+import { Button, ButtonProps } from "semantic-ui-react";
 import { GradientButtonProps, GradientButtonBorderProps } from "./props";
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { colors } from "../../Helpers/palette";
 import { linearGradientStyle } from "../../Helpers/paletteHelper";
@@ -13,12 +13,32 @@ const GradientButtonBorder = styled.div`
   border-radius: 100rem;
 `;
 
+const CustomSemanticButton = styled(Button)`
+  ${(props) =>
+    props.isHovered
+      ? `background: transparent none !important; color: ${colors.primaryWhite} !important;`
+      : `background: ${colors.primaryWhite} !important; color: ${colors.primaryBlack} !important;`}
+`;
+
 export const GradientButton = (props: GradientButtonProps) => {
+  const [isHovered, setIsHovered] = useState(false);
+
   const borderProps = props as GradientButtonBorderProps;
-  const buttonProps = props as GradientButtonProps;
+  const buttonProps = {
+    ...(props as ButtonProps),
+    isHovered: isHovered,
+  };
+
   return (
-    <GradientButtonBorder {...borderProps}>
-      <Button {...buttonProps}>{props.children}</Button>
+    <GradientButtonBorder
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      onClick={() => buttonProps.onClick}
+      {...borderProps}
+    >
+      <CustomSemanticButton {...buttonProps}>
+        {props.children}
+      </CustomSemanticButton>
     </GradientButtonBorder>
   );
 };

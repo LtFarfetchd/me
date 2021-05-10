@@ -11,21 +11,14 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <StyledSemanticButton>This is a sem ui button</StyledSemanticButton>
-        <GradientButton colorOne="blue" colorTwo="orange" borderSize="0.175rem">
-          Hi there
-        </GradientButton>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+        <GradientButton
+          colorOne="blue"
+          colorTwo="orange"
+          borderSize="0.175rem"
+          onClick={() => console.log("yup")}
         >
-          Learn React
-        </a>
+          This is a long button
+        </GradientButton>
       </header>
     </div>
   );

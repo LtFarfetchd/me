@@ -7,7 +7,11 @@ import { linearGradientStyle } from "../../Helpers/paletteHelper";
 
 const GradientButtonBorder = styled.div`
   background: ${(props: GradientButtonBorderProps) =>
-    linearGradientStyle(45, colors.primaryBlue, colors.primaryOrange)};
+    linearGradientStyle(
+      45,
+      props.colorOne || colors.primaryColor,
+      props.colorTwo || colors.secondaryColor
+    )};
   display: inline-block;
   padding: ${(props: GradientButtonBorderProps) => props.borderSize};
   border-radius: 100rem;
@@ -17,8 +21,8 @@ const GradientButtonBorder = styled.div`
 const CustomSemanticButton = styled(Button)`
   ${(props) =>
     props.isHovered
-      ? `background: transparent none !important; color: ${colors.primaryWhite} !important;`
-      : `background: ${colors.primaryWhite} !important; color: ${colors.primaryBlack} !important;`}
+      ? `background: transparent none !important; color: ${colors.generalWhite} !important;`
+      : `background: ${colors.generalWhite} !important; color: ${colors.generalBlack} !important;`}
 `;
 
 export const GradientButton = (props: GradientButtonProps) => {

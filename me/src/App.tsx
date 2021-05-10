@@ -15,11 +15,7 @@ function App() {
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
         <StyledSemanticButton>This is a sem ui button</StyledSemanticButton>
-        <GradientButton
-          gradientColorOne="blue"
-          gradientColorTwo="orange"
-          borderRadius="0.5rem"
-        >
+        <GradientButton colorOne="blue" colorTwo="orange" borderSize="0.175rem">
           Hi there
         </GradientButton>
         <a

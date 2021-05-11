@@ -1,49 +1,38 @@
-import { Button, ButtonProps } from "semantic-ui-react";
-import { GradientButtonProps, GradientButtonBorderProps } from "./props";
+import { Button } from "semantic-ui-react";
+import { GradientButtonProps } from "./props";
 import React, { useState } from "react";
 import styled from "styled-components";
-import { colors } from "../../Helpers/palette";
 import { linearGradientStyle } from "../../Helpers/paletteHelper";
 
 const GradientButtonBorder = styled.div`
-  background: ${(props: GradientButtonBorderProps) =>
-    linearGradientStyle(
-      45,
-      props.colorOne || colors.primaryColor,
-      props.colorTwo || colors.secondaryColor
-    )};
+  background: ${(props: GradientButtonProps) =>
+    linearGradientStyle(45, props.gradientColorOne, props.gradientColorTwo)};
   display: inline-block;
-  padding: ${(props: GradientButtonBorderProps) => props.borderSize};
+  padding: ${(props: GradientButtonProps) => props.gradientBorderSize};
   border-radius: 100rem;
   cursor: pointer;
 `;
 
-const CustomSemanticButton = styled(Button)`
-  ${(props) =>
+const StyledSemanticButton = styled(Button)`
+  ${(props: GradientButtonProps) =>
     props.isHovered
-      ? `background: transparent none !important; color: ${colors.generalWhite} !important;`
-      : `background: ${colors.generalWhite} !important; color: ${colors.generalBlack} !important;`}
+      ? `background: transparent none !important; color: ${props.unhoveredTextColor} !important;`
+      : `background: ${props.buttonColor} !important; color: ${props.hoveredTextColor} !important;`}
 `;
 
 export const GradientButton = (props: GradientButtonProps) => {
   const [isHovered, setIsHovered] = useState(false);
 
-  const borderProps = props as GradientButtonBorderProps;
-  const buttonProps = {
-    ...(props as ButtonProps),
-    isHovered: isHovered,
-  };
-
   return (
     <GradientButtonBorder
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      onClick={() => buttonProps.onClick}
-      {...borderProps}
+      onClick={() => props.onClick}
+      {...props}
     >
-      <CustomSemanticButton {...buttonProps}>
+      <StyledSemanticButton {...{ ...props, isHovered }}>
         {props.children}
-      </CustomSemanticButton>
+      </StyledSemanticButton>
     </GradientButtonBorder>
   );
 };

@@ -1,6 +1,6 @@
 import React from "react";
 import { colors } from "./Helpers/palette";
-import { GradientButton } from "./components/Button";
+import { GradientButton } from "./components/GradientButton";
 import { sizes } from "./Helpers/sizes";
 
 function App() {

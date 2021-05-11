@@ -1,27 +1,23 @@
 import React from "react";
-import { Button } from "semantic-ui-react";
-import styled from "styled-components";
-
-const StyledSemanticButton = styled(Button).attrs({ color: "blue" })`
-  width: 40rem;
-`;
+import { colors } from "./Helpers/palette";
+import { GradientButton } from "./components/GradientButton";
+import { sizes } from "./Helpers/sizes";
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <StyledSemanticButton>This is a sem ui button</StyledSemanticButton>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+        <GradientButton
+          gradientColorOne={colors.primaryColor}
+          gradientColorTwo={colors.secondaryColor}
+          gradientBorderSize={sizes.borderSize}
+          onClick={() => console.log("yup")}
+          unhoveredTextColor={colors.generalWhite}
+          hoveredTextColor={colors.generalWhite}
+          buttonColor={colors.generalBlack}
         >
-          Learn React
-        </a>
+          This is a long button
+        </GradientButton>
       </header>
     </div>
   );

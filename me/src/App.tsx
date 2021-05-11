@@ -2,17 +2,17 @@ import React from "react";
 import { colors } from "./Helpers/palette";
 import { GradientButton } from "./components/GradientButton";
 import { GradientMenu, GradientMenuItem } from "./components/GradientMenu";
-import { Menu } from "semantic-ui-react";
 import { sizes } from "./Helpers/sizes";
+import { Menu, Segment } from "semantic-ui-react";
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <GradientMenu>
-          <GradientMenuItem name="home" active={false} />
-          <GradientMenuItem name="messages" active={true} />
-          <GradientMenuItem name="friends" active={false} />
+        <GradientMenu defaultActiveIndex="home">
+          <GradientMenuItem name="Bio" active={false} />
+          <GradientMenuItem name="Experience" active={true} />
+          <GradientMenuItem name="Portfolio" active={false} />
         </GradientMenu>
         <GradientButton
           gradientColorOne={colors.primaryColor}

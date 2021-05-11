@@ -1,4 +1,4 @@
-import { Button } from "semantic-ui-react";
+import { Button, ButtonProps } from "semantic-ui-react";
 import { GradientButtonProps } from "./props";
 import React, { useState } from "react";
 import styled from "styled-components";
@@ -27,10 +27,19 @@ export const GradientButton = (props: GradientButtonProps) => {
     <GradientButtonBorder
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      onClick={() => props.onClick}
+      onClick={props.onClick}
       {...props}
     >
-      <StyledSemanticButton {...{ ...props, isHovered }}>
+      <StyledSemanticButton
+        {...{ ...props, isHovered }}
+        onClick={(
+          event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+          data: ButtonProps
+        ) => {
+          event.stopPropagation();
+          props.onClick && props.onClick(event, data);
+        }}
+      >
         {props.children}
       </StyledSemanticButton>
     </GradientButtonBorder>

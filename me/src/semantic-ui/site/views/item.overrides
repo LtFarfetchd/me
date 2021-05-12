@@ -4,4 +4,5 @@
 
 .item {
   border-radius: 100rem !important;
+  margin: 0 !important;
 }

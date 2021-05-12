@@ -1,47 +1,55 @@
-import { Button, ButtonProps } from "semantic-ui-react";
-import { GradientButtonProps } from "./props";
+// TODO: add a clicked state to button, hide border from screenreaders
+
+import {
+  GradientButtonBorderProps,
+  GradientButtonButtonProps,
+  GradientButtonProps,
+} from "./props";
 import React, { useState } from "react";
 import styled from "styled-components";
 import { linearGradientStyle } from "../../Helpers/paletteHelper";
+import { sizes } from "../../Helpers/sizes";
 
 const GradientButtonBorder = styled.div`
-  background: ${(props: GradientButtonProps) =>
+  background: ${(props: GradientButtonBorderProps) =>
     linearGradientStyle(45, props.gradientColorOne, props.gradientColorTwo)};
   display: inline-block;
-  padding: ${(props: GradientButtonProps) => props.gradientBorderSize};
+  padding: ${(props: GradientButtonBorderProps) => props.gradientBorderSize};
   border-radius: 100rem;
   cursor: pointer;
 `;
 
-const StyledSemanticButton = styled(Button)`
-  ${(props: GradientButtonProps) =>
+const StyledButton = styled.button`
+  border-radius: 100rem;
+  border: none;
+  padding: ${`${sizes.buttonVerticalPadding} ${sizes.buttonHorizontalPadding}`};
+  ${(props: GradientButtonButtonProps & { isHovered: boolean }) =>
     props.isHovered
-      ? `background: transparent none !important; color: ${props.unhoveredTextColor} !important;`
-      : `background: ${props.buttonColor} !important; color: ${props.hoveredTextColor} !important;`}
+      ? `background: transparent none; color: ${props.unhoveredTextColor};`
+      : `background: ${props.buttonColor}; color: ${props.hoveredTextColor};`}
 `;
 
-export const GradientButton = (props: GradientButtonProps) => {
+export const GradientButton: React.FC<GradientButtonProps> = (props) => {
   const [isHovered, setIsHovered] = useState(false);
+  const borderProps = props as GradientButtonBorderProps;
+  const buttonProps = props as GradientButtonButtonProps;
 
   return (
     <GradientButtonBorder
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onClick={props.onClick}
-      {...props}
+      {...borderProps}
     >
-      <StyledSemanticButton
-        {...{ ...props, isHovered }}
-        onClick={(
-          event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-          data: ButtonProps
-        ) => {
+      <StyledButton
+        {...{ ...buttonProps, isHovered }}
+        onClick={(event: React.MouseEvent<HTMLElement>) => {
           event.stopPropagation();
-          props.onClick && props.onClick(event, data);
+          props.onClick && props.onClick(event);
         }}
       >
         {props.children}
-      </StyledSemanticButton>
+      </StyledButton>
     </GradientButtonBorder>
   );
 };

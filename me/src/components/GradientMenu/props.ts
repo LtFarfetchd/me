@@ -2,9 +2,7 @@ import React from "react";
 import { MenuProps } from "semantic-ui-react";
 
 export interface GradientMenuProps {
-  children:
-    | Array<React.ReactElement<GradientMenuItemProps>>
-    | React.ReactElement<GradientMenuItemProps>;
+  targetSectionsComponents: Array<React.RefObject<HTMLDivElement>>;
 }
 
 export interface GradientMenuItemProps {

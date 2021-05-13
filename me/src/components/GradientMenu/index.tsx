@@ -1,5 +1,9 @@
 import { MenuItemProps, Segment } from "semantic-ui-react";
-import { GradientMenuItemProps, GradientMenuProps, ShiftingGradientUnderlineProps } from "./props";
+import {
+  GradientMenuItemProps,
+  GradientMenuProps,
+  ShiftingGradientUnderlineProps,
+} from "./props";
 import React, { useState } from "react";
 import styled from "styled-components";
 import { linearGradientStyle } from "../../Helpers/paletteHelper";
@@ -26,7 +30,7 @@ const GradientMenuContainer = styled.div`
   display: inline-flex;
 `;
 
-export const GradientMenu = (props: GradientMenuProps) => {
+export const GradientMenu: React.FC<GradientMenuProps> = (props) => {
   return (
     <Segment inverted>
       <GradientMenuContainer>
@@ -65,16 +69,7 @@ const StyledGradientMenuItem = styled.div`
 `;
 
 export const GradientMenuItem: React.FC<GradientMenuItemProps> = (props) => {
-  const [isActive, setIsActive] = useState(false);
   return (
-    <StyledGradientMenuItem
-      {...props}
-      onClick={(event: React.MouseEvent<HTMLElement>) => {
-        setIsActive(true);
-        props.onClick(event);
-      }}
-    >
-      {props.name}
-    </StyledGradientMenuItem>
+    <StyledGradientMenuItem {...props}>{props.name}</StyledGradientMenuItem>
   );
 };

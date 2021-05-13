@@ -1,10 +1,10 @@
-import { MenuItemProps, Segment } from "semantic-ui-react";
+import { Segment } from "semantic-ui-react";
 import {
   GradientMenuItemProps,
   GradientMenuProps,
   ShiftingGradientUnderlineProps,
 } from "./props";
-import React, { useState } from "react";
+import React, { ReactElement, ReactNode } from "react";
 import styled from "styled-components";
 import { linearGradientStyle } from "../../Helpers/paletteHelper";
 import { colors } from "../../Helpers/palette";
@@ -31,17 +31,29 @@ const GradientMenuContainer = styled.div`
 `;
 
 export const GradientMenu: React.FC<GradientMenuProps> = (props) => {
+  const scrollPositionPastElementTop = (
+    component: React.RefObject<HTMLDivElement>
+  ) => false;
+
+  const getActiveMenuItem = (
+    menuItem: ReactNode,
+    targetComponent: React.RefObject<HTMLDivElement>
+  ) =>
+    React.cloneElement(menuItem as ReactElement, {
+      isActive: scrollPositionPastElementTop(targetComponent),
+    });
+
   return (
     <Segment inverted>
       <GradientMenuContainer>
         {React.Children.map(props.children, (menuItem, i) =>
           i < React.Children.count(props.children) - 1 ? (
             <>
-              {menuItem}
+              {getActiveMenuItem(menuItem, props.targetSectionsComponents[i])}
               <GradientMenuDivider />
             </>
           ) : (
-            menuItem
+            getActiveMenuItem(menuItem, props.targetSectionsComponents[i])
           )
         )}
         <ShiftingGradientUnderline targets={props.children} />
@@ -70,6 +82,14 @@ const StyledGradientMenuItem = styled.div`
 
 export const GradientMenuItem: React.FC<GradientMenuItemProps> = (props) => {
   return (
-    <StyledGradientMenuItem {...props}>{props.name}</StyledGradientMenuItem>
+    <StyledGradientMenuItem
+      {...props}
+      onClick={(e) => {
+        console.log(props.isActive);
+        props.onClick && props.onClick(e);
+      }}
+    >
+      {props.name}
+    </StyledGradientMenuItem>
   );
 };

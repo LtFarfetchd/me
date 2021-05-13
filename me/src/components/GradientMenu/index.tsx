@@ -1,6 +1,6 @@
 import {
   Menu,
-  MenuItem,
+  Divider,
   MenuItemProps,
   MenuProps,
   Segment,
@@ -20,13 +20,38 @@ const ShiftingGradientUnderline = styled.span`
   ${(props: ShiftingGradientUnderlineProps) => "background: none;"}
 `;
 
-export const GradientMenu = (props: MenuProps) => {
+const GradientMenuDivider = styled.div`
+  display: flex;
+  &::after {
+    background-color: white;
+    width: ${sizes.borderSize};
+    height: 50%;
+    content: "";
+    border-radius: 100rem;
+    align-self: center;
+  }
+`;
+
+const GradientMenuContainer = styled.div`
+  display: inline-flex;
+`;
+
+export const GradientMenu: React.FC = (props) => {
   return (
     <Segment inverted>
-      <Menu inverted secondary {...props}>
-        {props.children}
+      <GradientMenuContainer>
+        {React.Children.map(props.children, (menuItem, i) =>
+          i < React.Children.count(props.children) - 1 ? (
+            <>
+              {menuItem}
+              <GradientMenuDivider />
+            </>
+          ) : (
+            menuItem
+          )
+        )}
         <ShiftingGradientUnderline targets={props.children} />
-      </Menu>
+      </GradientMenuContainer>
     </Segment>
   );
 };
@@ -35,20 +60,7 @@ const StyledGradientMenuItem = styled.div`
   display: flex;
   padding: 0.75rem 1rem;
   cursor: pointer;
-  &:hover::after {
-    content: "";
-    position: absolute;
-    border-radius: 100rem;
-    left: 0;
-    bottom: 0;
-    height: ${sizes.borderSize};
-    width: 100%;
-    background: ${linearGradientStyle(
-      45,
-      colors.primaryColor,
-      colors.secondaryColor
-    )};
-  }
+  margin: 0 0.5rem;
 `;
 
 export const GradientMenuItem = (props: MenuItemProps) => {

@@ -9,7 +9,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <GradientMenu defaultActiveIndex="home">
+        <GradientMenu>
           <GradientMenuItem name="Bio" />
           <GradientMenuItem name="Experience" />
           <GradientMenuItem name="Portfolio" />

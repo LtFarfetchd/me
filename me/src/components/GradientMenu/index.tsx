@@ -4,7 +4,14 @@ import {
   GradientMenuProps,
   ShiftingGradientUnderlineProps,
 } from "./props";
-import React, { ReactElement, ReactNode } from "react";
+import React, {
+  ReactElement,
+  ReactNode,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import styled from "styled-components";
 import { linearGradientStyle } from "../../Helpers/paletteHelper";
 import { colors } from "../../Helpers/palette";
@@ -35,8 +42,16 @@ export const GradientMenu: React.FC<GradientMenuProps> = (props) => {
     nodeRef: React.RefObject<HTMLDivElement>
   ) => {
     const nodeTop = nodeRef.current?.getBoundingClientRect().top;
-    return nodeTop ? nodeTop > window.scrollY : false;
+    return nodeTop ? scrollY > nodeTop : false;
   };
+
+  const [scrollY, setScrollY] = useState(0);
+  const captureScrollY = () => setScrollY(window.pageYOffset);
+
+  useEffect(() => {
+    window.addEventListener("scroll", captureScrollY);
+    return () => window.removeEventListener("scroll", captureScrollY);
+  }, [captureScrollY, scrollY]);
 
   const getActiveMenuItem = (
     menuItem: ReactNode,
@@ -78,7 +93,8 @@ const StyledGradientMenuItem = styled.div`
   )};
   background-clip: text;
   transition: all 0.25s ease-in-out;
-  color: white;
+  color: ${(props: GradientMenuItemProps) =>
+    props.isActive ? "red" : "white"};
   &:hover {
     color: transparent;
   }
@@ -88,9 +104,9 @@ export const GradientMenuItem: React.FC<GradientMenuItemProps> = (props) => {
   return (
     <StyledGradientMenuItem
       {...props}
-      onClick={(e) => {
+      onClick={(event: React.MouseEvent<HTMLElement>) => {
         props.targetComponent?.current?.scrollIntoView();
-        props.onClick && props.onClick(e);
+        props.onClick && props.onClick(event);
       }}
     >
       {props.name}

@@ -1,15 +1,5 @@
-import {
-  Menu,
-  Divider,
-  MenuItemProps,
-  MenuProps,
-  Segment,
-} from "semantic-ui-react";
-import {
-  GradientMenuProps,
-  WrappedGradientMenuItemProps,
-  ShiftingGradientUnderlineProps,
-} from "./props";
+import { MenuItemProps, Segment } from "semantic-ui-react";
+import { GradientMenuItemProps, GradientMenuProps, ShiftingGradientUnderlineProps } from "./props";
 import React, { useState } from "react";
 import styled from "styled-components";
 import { linearGradientStyle } from "../../Helpers/paletteHelper";
@@ -36,7 +26,7 @@ const GradientMenuContainer = styled.div`
   display: inline-flex;
 `;
 
-export const GradientMenu: React.FC = (props) => {
+export const GradientMenu = (props: GradientMenuProps) => {
   return (
     <Segment inverted>
       <GradientMenuContainer>
@@ -70,17 +60,19 @@ const StyledGradientMenuItem = styled.div`
   transition: all 0.25s ease-in-out;
   color: white;
   &:hover {
-    -webkit-text-fill-color: transparent;
+    color: transparent;
   }
 `;
 
-export const GradientMenuItem = (props: MenuItemProps) => {
-  const [isHovered, setIsHovered] = useState(false);
+export const GradientMenuItem: React.FC<GradientMenuItemProps> = (props) => {
+  const [isActive, setIsActive] = useState(false);
   return (
     <StyledGradientMenuItem
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
       {...props}
+      onClick={(event: React.MouseEvent<HTMLElement>) => {
+        setIsActive(true);
+        props.onClick(event);
+      }}
     >
       {props.name}
     </StyledGradientMenuItem>

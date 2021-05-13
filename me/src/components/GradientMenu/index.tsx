@@ -60,21 +60,19 @@ export const GradientMenu: React.FC<GradientMenuProps> = (props) => {
     });
 
   return (
-    <Segment inverted>
-      <GradientMenuContainer>
-        {React.Children.map(props.children, (menuItem, i) =>
-          i < React.Children.count(props.children) - 1 ? (
-            <>
-              {getActiveMenuItem(menuItem, props.targetSectionsComponents[i])}
-              <GradientMenuDivider />
-            </>
-          ) : (
-            getActiveMenuItem(menuItem, props.targetSectionsComponents[i])
-          )
-        )}
-        <ShiftingGradientUnderline targets={props.children} />
-      </GradientMenuContainer>
-    </Segment>
+    <GradientMenuContainer>
+      {React.Children.map(props.children, (menuItem, i) =>
+        i < React.Children.count(props.children) - 1 ? (
+          <>
+            {getActiveMenuItem(menuItem, props.targetSectionsComponents[i])}
+            <GradientMenuDivider />
+          </>
+        ) : (
+          getActiveMenuItem(menuItem, props.targetSectionsComponents[i])
+        )
+      )}
+      <ShiftingGradientUnderline targets={props.children} />
+    </GradientMenuContainer>
   );
 };
 

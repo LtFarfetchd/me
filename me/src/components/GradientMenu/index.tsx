@@ -61,6 +61,17 @@ const StyledGradientMenuItem = styled.div`
   padding: 0.75rem 1rem;
   cursor: pointer;
   margin: 0 0.5rem;
+  background: ${linearGradientStyle(
+    45,
+    colors.primaryColor,
+    colors.secondaryColor
+  )};
+  background-clip: text;
+  transition: all 0.25s ease-in-out;
+  color: white;
+  &:hover {
+    -webkit-text-fill-color: transparent;
+  }
 `;
 
 export const GradientMenuItem = (props: MenuItemProps) => {

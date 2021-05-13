@@ -4,14 +4,7 @@ import {
   GradientMenuProps,
   ShiftingGradientUnderlineProps,
 } from "./props";
-import React, {
-  ReactElement,
-  ReactNode,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { ReactElement, ReactNode, useEffect, useState } from "react";
 import styled from "styled-components";
 import { linearGradientStyle } from "../../Helpers/paletteHelper";
 import { colors } from "../../Helpers/palette";
@@ -41,17 +34,21 @@ export const GradientMenu: React.FC<GradientMenuProps> = (props) => {
   const scrollPositionPastElementTop = (
     nodeRef: React.RefObject<HTMLDivElement>
   ) => {
-    const nodeTop = nodeRef.current?.getBoundingClientRect().top;
-    return nodeTop ? scrollY > nodeTop : false;
+    const nodeTop = nodeRef.current?.offsetTop;
+    const nodeHeight = nodeRef.current?.offsetHeight;
+
+    return nodeTop && nodeHeight
+      ? nodeTop < scrollY && scrollY < nodeTop + nodeHeight
+      : false;
   };
 
   const [scrollY, setScrollY] = useState(0);
-  const captureScrollY = () => setScrollY(window.pageYOffset);
 
   useEffect(() => {
+    const captureScrollY = () => setScrollY(window.pageYOffset);
     window.addEventListener("scroll", captureScrollY);
     return () => window.removeEventListener("scroll", captureScrollY);
-  }, [captureScrollY, scrollY]);
+  }, [scrollY]);
 
   const getActiveMenuItem = (
     menuItem: ReactNode,

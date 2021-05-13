@@ -2,6 +2,7 @@ import React from "react";
 
 export interface GradientMenuProps {
   targetSectionsComponents: Array<React.RefObject<HTMLDivElement>>;
+  containerComponent: React.RefObject<HTMLDivElement>;
 }
 
 export interface GradientMenuItemProps {

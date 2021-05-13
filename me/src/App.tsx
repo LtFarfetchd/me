@@ -9,6 +9,7 @@ import { EmploymentHistory } from "./Sections/EmploymentHistory";
 import { Folio } from "./Sections/Folio";
 
 const App = () => {
+  const headerRef = createRef<HTMLDivElement>();
   const bioRef = createRef<HTMLDivElement>();
   const expRef = createRef<HTMLDivElement>();
   const folioRef = createRef<HTMLDivElement>();
@@ -16,8 +17,11 @@ const App = () => {
   return (
     <div className="App">
       <header className="App-header">
-        <Header>
-          <GradientMenu targetSectionsComponents={[bioRef, expRef, folioRef]}>
+        <Header ref={headerRef}>
+          <GradientMenu
+            targetSectionsComponents={[bioRef, expRef, folioRef]}
+            containerComponent={headerRef}
+          >
             <GradientMenuItem name="Bio" onClick={() => console.log("bio")} />
             <GradientMenuItem
               name="Experience"

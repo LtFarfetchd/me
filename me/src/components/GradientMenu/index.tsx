@@ -1,4 +1,4 @@
-import { Segment } from "semantic-ui-react";
+import { movingNodeInsideStaticNode } from "../../Helpers/functions";
 import {
   GradientMenuItemProps,
   GradientMenuProps,
@@ -30,18 +30,11 @@ const GradientMenuContainer = styled.div`
   display: inline-flex;
 `;
 
-export const GradientMenu: React.FC<GradientMenuProps> = (props) => {
-  const scrollPositionPastElementTop = (
-    nodeRef: React.RefObject<HTMLDivElement>
-  ) => {
-    const nodeTop = nodeRef.current?.offsetTop;
-    const nodeHeight = nodeRef.current?.offsetHeight;
-
-    return nodeTop && nodeHeight
-      ? nodeTop < scrollY && scrollY < nodeTop + nodeHeight
-      : false;
-  };
-
+export const GradientMenu: React.FC<GradientMenuProps> = ({
+  children,
+  containerComponent,
+  targetSectionsComponents,
+}) => {
   const [scrollY, setScrollY] = useState(0);
 
   useEffect(() => {
@@ -52,26 +45,38 @@ export const GradientMenu: React.FC<GradientMenuProps> = (props) => {
 
   const getActiveMenuItem = (
     menuItem: ReactNode,
-    targetComponent: React.RefObject<HTMLDivElement>
-  ) =>
-    React.cloneElement(menuItem as ReactElement, {
-      isActive: scrollPositionPastElementTop(targetComponent),
+    targetComponent: React.RefObject<HTMLDivElement>,
+    containerBeyondTarget: (target: React.RefObject<HTMLDivElement>) => boolean
+  ) => {
+    return React.cloneElement(menuItem as ReactElement, {
+      isActive: containerBeyondTarget(targetComponent),
       targetComponent: targetComponent,
     });
+  };
+
+  const containerBeyondTarget = movingNodeInsideStaticNode(containerComponent);
 
   return (
     <GradientMenuContainer>
-      {React.Children.map(props.children, (menuItem, i) =>
-        i < React.Children.count(props.children) - 1 ? (
+      {React.Children.map(children, (menuItem, i) =>
+        i < React.Children.count(children) - 1 ? (
           <>
-            {getActiveMenuItem(menuItem, props.targetSectionsComponents[i])}
+            {getActiveMenuItem(
+              menuItem,
+              targetSectionsComponents[i],
+              containerBeyondTarget
+            )}
             <GradientMenuDivider />
           </>
         ) : (
-          getActiveMenuItem(menuItem, props.targetSectionsComponents[i])
+          getActiveMenuItem(
+            menuItem,
+            targetSectionsComponents[i],
+            containerBeyondTarget
+          )
         )
       )}
-      <ShiftingGradientUnderline targets={props.children} />
+      <ShiftingGradientUnderline targets={children} />
     </GradientMenuContainer>
   );
 };

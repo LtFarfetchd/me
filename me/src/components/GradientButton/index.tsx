@@ -22,6 +22,7 @@ const GradientButtonBorder = styled.div`
 const StyledButton = styled.button`
   border-radius: 100rem;
   border: none;
+  transition: all 0.25s ease-in-out;
   padding: ${`${sizes.buttonVerticalPadding} ${sizes.buttonHorizontalPadding}`};
   ${(props: GradientButtonButtonProps & { isHovered: boolean }) =>
     props.isHovered

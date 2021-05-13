@@ -1,8 +1,6 @@
 import React from "react";
 import { BioProps } from "./props";
 
-const Bio = (props: BioProps) => {
-  return <></>;
+export const Bio: React.FC<BioProps> = (props) => {
+  return <>{props.children}</>;
 };
-
-export { Bio };

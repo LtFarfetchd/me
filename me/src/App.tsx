@@ -3,22 +3,37 @@ import { colors } from "./Helpers/palette";
 import { GradientButton } from "./components/GradientButton";
 import { GradientMenu, GradientMenuItem } from "./components/GradientMenu";
 import { sizes } from "./Helpers/sizes";
+import { Header } from "./Sections/Header";
+import { Bio } from "./Sections/Bio";
+import { EmploymentHistory } from "./Sections/EmploymentHistory";
+import { Folio } from "./Sections/Folio";
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <GradientMenu>
-          <GradientMenuItem name="Bio" onClick={() => console.log("bio")} />
-          <GradientMenuItem
-            name="Experience"
-            onClick={() => console.log("exp")}
-          />
-          <GradientMenuItem
-            name="Portfolio"
-            onClick={() => console.log("port")}
-          />
-        </GradientMenu>
+        <Header>
+          <GradientMenu>
+            <GradientMenuItem name="Bio" onClick={() => console.log("bio")} />
+            <GradientMenuItem
+              name="Experience"
+              onClick={() => console.log("exp")}
+            />
+            <GradientMenuItem
+              name="Portfolio"
+              onClick={() => console.log("port")}
+            />
+          </GradientMenu>
+        </Header>
+        <Bio>
+          <div>I'm the bio</div>
+        </Bio>
+        <EmploymentHistory>
+          <div>I'm the history</div>
+        </EmploymentHistory>
+        <Folio>
+          <div>I'm the folio</div>
+        </Folio>
         <GradientButton
           gradientColorOne={colors.primaryColor}
           gradientColorTwo={colors.secondaryColor}

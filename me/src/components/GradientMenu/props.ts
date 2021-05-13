@@ -5,9 +5,10 @@ export interface GradientMenuProps {
 }
 
 export interface GradientMenuItemProps {
-  onClick: (event: React.MouseEvent<HTMLElement>) => void;
+  onClick?: (event: React.MouseEvent<HTMLElement>) => void;
   name: string;
   isActive?: boolean;
+  targetComponent?: React.RefObject<HTMLDivElement>;
 }
 
 export interface ShiftingGradientUnderlineProps {

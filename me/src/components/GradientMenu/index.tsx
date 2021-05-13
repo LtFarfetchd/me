@@ -32,8 +32,11 @@ const GradientMenuContainer = styled.div`
 
 export const GradientMenu: React.FC<GradientMenuProps> = (props) => {
   const scrollPositionPastElementTop = (
-    component: React.RefObject<HTMLDivElement>
-  ) => false;
+    nodeRef: React.RefObject<HTMLDivElement>
+  ) => {
+    const nodeTop = nodeRef.current?.getBoundingClientRect().top;
+    return nodeTop ? nodeTop > window.scrollY : false;
+  };
 
   const getActiveMenuItem = (
     menuItem: ReactNode,
@@ -41,6 +44,7 @@ export const GradientMenu: React.FC<GradientMenuProps> = (props) => {
   ) =>
     React.cloneElement(menuItem as ReactElement, {
       isActive: scrollPositionPastElementTop(targetComponent),
+      targetComponent: targetComponent,
     });
 
   return (
@@ -85,7 +89,7 @@ export const GradientMenuItem: React.FC<GradientMenuItemProps> = (props) => {
     <StyledGradientMenuItem
       {...props}
       onClick={(e) => {
-        console.log(props.isActive);
+        props.targetComponent?.current?.scrollIntoView();
         props.onClick && props.onClick(e);
       }}
     >

@@ -5,5 +5,9 @@ export const Folio = React.forwardRef<
   HTMLDivElement,
   React.PropsWithChildren<FolioProps>
 >((props, ref) => {
-  return <div ref={ref}>{props.children}</div>;
+  return (
+    <div style={{ height: "600px", color: "white" }} ref={ref}>
+      {props.children}
+    </div>
+  );
 });

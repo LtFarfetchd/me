@@ -1,6 +1,9 @@
 import React from "react";
 import { FolioProps } from "./props";
 
-export const Folio: React.FC<FolioProps> = (props) => {
-  return <>{props.children}</>;
-};
+export const Folio = React.forwardRef<
+  HTMLDivElement,
+  React.PropsWithChildren<FolioProps>
+>((props, ref) => {
+  return <div ref={ref}>{props.children}</div>;
+});

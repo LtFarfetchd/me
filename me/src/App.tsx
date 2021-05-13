@@ -1,4 +1,4 @@
-import React from "react";
+import React, { createRef } from "react";
 import { colors } from "./Helpers/palette";
 import { GradientButton } from "./components/GradientButton";
 import { GradientMenu, GradientMenuItem } from "./components/GradientMenu";
@@ -8,12 +8,16 @@ import { Bio } from "./Sections/Bio";
 import { EmploymentHistory } from "./Sections/EmploymentHistory";
 import { Folio } from "./Sections/Folio";
 
-function App() {
+const App = () => {
+  const bioRef = createRef<HTMLDivElement>();
+  const expRef = createRef<HTMLDivElement>();
+  const folioRef = createRef<HTMLDivElement>();
+
   return (
     <div className="App">
       <header className="App-header">
         <Header>
-          <GradientMenu>
+          <GradientMenu targetSectionsComponents={[bioRef, expRef, folioRef]}>
             <GradientMenuItem name="Bio" onClick={() => console.log("bio")} />
             <GradientMenuItem
               name="Experience"
@@ -25,13 +29,11 @@ function App() {
             />
           </GradientMenu>
         </Header>
-        <Bio>
-          <div>I'm the bio</div>
-        </Bio>
-        <EmploymentHistory>
+        <Bio ref={bioRef}>I'm the bio</Bio>
+        <EmploymentHistory ref={expRef}>
           <div>I'm the history</div>
         </EmploymentHistory>
-        <Folio>
+        <Folio ref={folioRef}>
           <div>I'm the folio</div>
         </Folio>
         <GradientButton
@@ -48,6 +50,6 @@ function App() {
       </header>
     </div>
   );
-}
+};
 
 export default App;

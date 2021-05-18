@@ -1,14 +1,20 @@
-import { movingNodeInsideStaticNode } from "../../Helpers/functions";
+import {
+  getBoundaryRectExtent,
+  getRefBoundaryRect,
+  getRefCurrent,
+} from "../../Helpers/functions";
 import {
   GradientMenuItemProps,
   GradientMenuProps,
   ShiftingGradientUnderlineProps,
 } from "./props";
-import React, { ReactElement, ReactNode, useEffect, useState } from "react";
+import React, { ReactElement, RefObject, useEffect, useState } from "react";
 import styled from "styled-components";
 import { linearGradientStyle } from "../../Helpers/paletteHelper";
 import { colors } from "../../Helpers/palette";
 import { sizes } from "../../Helpers/sizes";
+import { flow } from "../../../node_modules/fp-ts/function";
+import * as Option from "fp-ts/lib/Option";
 
 const ShiftingGradientUnderline = styled.span`
   ${(props: ShiftingGradientUnderlineProps) => "background: none;"}
@@ -35,26 +41,41 @@ export const GradientMenu: React.FC<GradientMenuProps> = ({
   containerComponent,
   targetSectionsComponents,
 }) => {
-  const [scrollY, setScrollY] = useState(0);
+  const [menuContainerY, setMenuContainerY] = useState(0);
 
-  useEffect(() => {
-    const captureScrollY = () => setScrollY(window.pageYOffset);
-    window.addEventListener("scroll", captureScrollY);
-    return () => window.removeEventListener("scroll", captureScrollY);
-  }, [scrollY]);
+  const getTopExtentOfDomNode = flow(
+    getRefCurrent,
+    Option.map(getRefBoundaryRect),
+    Option.map(getBoundaryRectExtent("top")),
+    Option.toNullable
+  );
 
   const getActiveMenuItem = (
-    menuItem: ReactNode,
-    targetComponent: React.RefObject<HTMLDivElement>,
-    containerBeyondTarget: (target: React.RefObject<HTMLDivElement>) => boolean
+    menuItemToActivate: React.ReactNode,
+    menuContainerBottomExtent: number,
+    sectionContainer: RefObject<HTMLDivElement>
   ) => {
-    return React.cloneElement(menuItem as ReactElement, {
-      isActive: containerBeyondTarget(targetComponent),
-      targetComponent: targetComponent,
+    const sectionTopExtent = getTopExtentOfDomNode(sectionContainer);
+    console.log(menuContainerBottomExtent, sectionTopExtent);
+    return React.cloneElement(menuItemToActivate as ReactElement, {
+      isActive:
+        sectionTopExtent && menuContainerBottomExtent > sectionTopExtent,
+      targetComponent: sectionContainer,
     });
   };
 
-  const containerBeyondTarget = movingNodeInsideStaticNode(containerComponent);
+  useEffect(() => {
+    const getBottomExtentOfDomNode = flow(
+      getRefCurrent,
+      Option.map(getRefBoundaryRect),
+      Option.map(getBoundaryRectExtent("bottom")),
+      Option.toNullable
+    );
+    const captureMenuContainerY = () =>
+      setMenuContainerY(getBottomExtentOfDomNode(containerComponent) ?? 0);
+    window.addEventListener("scroll", captureMenuContainerY);
+    return () => window.removeEventListener("scroll", captureMenuContainerY);
+  }, [menuContainerY, containerComponent]);
 
   return (
     <GradientMenuContainer>
@@ -63,16 +84,16 @@ export const GradientMenu: React.FC<GradientMenuProps> = ({
           <>
             {getActiveMenuItem(
               menuItem,
-              targetSectionsComponents[i],
-              containerBeyondTarget
+              menuContainerY,
+              targetSectionsComponents[i]
             )}
             <GradientMenuDivider />
           </>
         ) : (
           getActiveMenuItem(
             menuItem,
-            targetSectionsComponents[i],
-            containerBeyondTarget
+            menuContainerY,
+            targetSectionsComponents[i]
           )
         )
       )}

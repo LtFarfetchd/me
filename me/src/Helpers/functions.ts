@@ -1,13 +1,17 @@
-export const movingNodeInsideStaticNode = (
-  movingNode: React.RefObject<HTMLDivElement>
-) => (staticNode: React.RefObject<HTMLDivElement>) => {
-  const movingNodeBottom =
-    movingNode.current?.getBoundingClientRect().bottom ?? 0;
-  const staticNodeTop = staticNode.current?.getBoundingClientRect().top ?? 0;
-  const staticNodeBottom =
-    staticNode.current?.getBoundingClientRect().bottom ?? 0;
+import * as Option from "fp-ts/lib/Option";
 
-  return (
-    staticNodeTop < movingNodeBottom && movingNodeBottom < staticNodeBottom
-  );
-};
+export const getRefCurrent = (node: React.RefObject<HTMLElement>) =>
+  node.current ? Option.some(node.current) : Option.none;
+
+export const getRefBoundaryRect = (domNode: HTMLElement) =>
+  domNode.getBoundingClientRect();
+
+export const getBoundaryRectExtent =
+  (direction: "top" | "bottom" | "left" | "right") => (domRect: DOMRect) =>
+    direction === "top"
+      ? domRect.top
+      : direction === "bottom"
+      ? domRect.bottom
+      : direction === "left"
+      ? domRect.left
+      : domRect.right;

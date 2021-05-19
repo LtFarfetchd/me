@@ -108,6 +108,7 @@ export const GradientMenuItem: React.FC<GradientMenuItemProps> = (props) => {
     return () => window.removeEventListener("scroll", captureNodeExtents);
   }, [containerNodeRef, targetNodeRef]);
 
+  console.log(containerNodeBottom, targetNodeTop, targetNodeBottom);
   return (
     <StyledGradientMenuItem
       {...props}
@@ -116,7 +117,7 @@ export const GradientMenuItem: React.FC<GradientMenuItemProps> = (props) => {
         containerNodeBottom <= targetNodeBottom
       }
       onClick={(event: React.MouseEvent<HTMLElement>) => {
-        targetNodeRef?.current?.scrollIntoView();
+        targetNodeRef.current?.scrollIntoView({ behavior: "smooth" });
         onClick && onClick(event);
       }}
     >

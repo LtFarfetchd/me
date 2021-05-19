@@ -7,7 +7,7 @@ export const Header = React.forwardRef<
   React.PropsWithChildren<HeaderProps>
 >((props, ref) => {
   return (
-    <Sticky>
+    <Sticky context={props.context}>
       <Ref innerRef={ref}>
         <Segment inverted>{props.children}</Segment>
       </Ref>

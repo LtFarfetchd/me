@@ -13,11 +13,12 @@ const App = () => {
   const bioRef = createRef<HTMLDivElement>();
   const expRef = createRef<HTMLDivElement>();
   const folioRef = createRef<HTMLDivElement>();
+  const appRef = createRef<HTMLDivElement>();
 
   return (
-    <div className="App">
+    <div className="App" ref={appRef}>
       <header className="App-header">
-        <Header ref={headerRef}>
+        <Header ref={headerRef} context={appRef}>
           <GradientMenu>
             <GradientMenuItem
               name="Bio"

@@ -15,3 +15,7 @@ export const getBoundaryRectExtent =
       : direction === "left"
       ? domRect.left
       : domRect.right;
+
+export const nullishToNumber =
+  (defaultNumber: number) => (nullishNumber: number | null) =>
+    nullishNumber === null ? defaultNumber : nullishNumber;

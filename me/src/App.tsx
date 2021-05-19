@@ -18,18 +18,27 @@ const App = () => {
     <div className="App">
       <header className="App-header">
         <Header ref={headerRef}>
-          <GradientMenu
-            targetSectionsComponents={[bioRef, expRef, folioRef]}
-            containerComponent={headerRef}
-          >
-            <GradientMenuItem name="Bio" onClick={() => console.log("bio")} />
+          <GradientMenu>
+            <GradientMenuItem
+              name="Bio"
+              onClick={() => console.log("bio")}
+              targetNodeRef={bioRef}
+              containerNodeRef={headerRef}
+              isActive={false}
+            />
             <GradientMenuItem
               name="Experience"
               onClick={() => console.log("exp")}
+              targetNodeRef={expRef}
+              containerNodeRef={headerRef}
+              isActive={false}
             />
             <GradientMenuItem
               name="Portfolio"
               onClick={() => console.log("port")}
+              targetNodeRef={folioRef}
+              containerNodeRef={headerRef}
+              isActive={false}
             />
           </GradientMenu>
         </Header>

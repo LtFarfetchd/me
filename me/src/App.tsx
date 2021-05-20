@@ -2,6 +2,7 @@ import React, { createRef } from "react";
 import { colors } from "./Helpers/palette";
 import { GradientButton } from "./components/GradientButton";
 import { GradientMenu, GradientMenuItem } from "./components/GradientMenu";
+import { ItchGameEmbed } from "./components/ItchGameEmbed";
 import { sizes } from "./Helpers/sizes";
 import { Header } from "./Sections/Header";
 import { Bio } from "./Sections/Bio";
@@ -48,6 +49,12 @@ const App = () => {
           <div>I'm the history</div>
         </EmploymentHistory>
         <Folio ref={folioRef}>
+          <ItchGameEmbed
+            gameName="Game of Beans"
+            gameSlug="game-of-beans"
+            gamePublisher="outercube"
+            description="blah"
+          />
           <div>I'm the folio</div>
         </Folio>
         <GradientButton

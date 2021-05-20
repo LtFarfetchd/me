@@ -108,7 +108,6 @@ export const GradientMenuItem: React.FC<GradientMenuItemProps> = (props) => {
     return () => window.removeEventListener("scroll", captureNodeExtents);
   }, [containerNodeRef, targetNodeRef]);
 
-  console.log(containerNodeBottom, targetNodeTop, targetNodeBottom);
   return (
     <StyledGradientMenuItem
       {...props}

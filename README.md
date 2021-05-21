@@ -8,6 +8,7 @@ This is the codebase for Adam's experimental resume website. Feel free to explor
 
 - when clicking on `GradientMenuItem`s, have it scroll so that the top of the section is below the bottom of the menu container
 - make sure the `GradientMenu` doesn't activate `GradientMenuItem`s as it scrolls through them after clicks
+- switch large values creating circular border radii to `50%` values
 
 ## Improvements:
 
